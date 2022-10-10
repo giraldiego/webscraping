@@ -1,16 +1,15 @@
-# This is a sample Python script.
+from bs4 import BeautifulSoup
 
-# Press Ctrl+F5 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+with open("home.html", "r") as html_file:
+    content = html_file.read()
 
+    soup = BeautifulSoup(content, "lxml")
+    course_cards = soup.find_all("div", class_="card")
+    for course in course_cards:
+        course_name = course.h5.text
+        course_price = course.a.text.split()[-1]
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press F9 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+        # print(course_name)
+        # print(course_price)
+        print(f"{course_name} costs: ${course_price[:-1]}")
+        print("-"*20)
